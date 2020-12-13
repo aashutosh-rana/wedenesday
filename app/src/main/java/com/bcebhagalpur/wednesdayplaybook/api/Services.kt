@@ -4,14 +4,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class ServiceFactory {
+class Services {
 
-    fun getInstance(): ApiService? {
+    fun getInstance(): ApiSongService? {
         val baseUrl = "https://itunes.apple.com/"
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        return retrofit.create<ApiService>(ApiService::class.java)
+        return retrofit.create<ApiSongService>(ApiSongService::class.java)
     }
 }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-class Track :Serializable {
+class TrackSong :Serializable {
     @SerializedName("wrapperType")
     @Expose
     private var wrapperType: String? = null

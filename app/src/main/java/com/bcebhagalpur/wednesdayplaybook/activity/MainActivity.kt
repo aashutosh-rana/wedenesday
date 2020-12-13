@@ -11,11 +11,9 @@ import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.*
 import com.bcebhagalpur.wednesdayplaybook.R
 import com.bcebhagalpur.wednesdayplaybook.adapter.SongAdapter
-import com.bcebhagalpur.wednesdayplaybook.model.Track
+import com.bcebhagalpur.wednesdayplaybook.model.TrackSong
 import com.bcebhagalpur.wednesdayplaybook.view.SongListContract
 import com.bcebhagalpur.wednesdayplaybook.view.SongListPresenter
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView
-
 
 class MainActivity : AppCompatActivity(), SongListContract.View {
 
@@ -25,7 +23,7 @@ class MainActivity : AppCompatActivity(), SongListContract.View {
     var listTracks: RecyclerView? = null
     private lateinit var progressBar: ProgressBar
 
-    private val dataTracks: MutableList<Track> = ArrayList()
+    private val dataTracks: MutableList<TrackSong> = ArrayList()
 
     private var adapter: SongAdapter? = null
     var presenter: SongListPresenter
@@ -92,10 +90,10 @@ class MainActivity : AppCompatActivity(), SongListContract.View {
         }
     }
 
-    override fun displayTracks(dataTracks: List<Track?>?) {
+    override fun displayTracks(dataTracks: List<TrackSong?>?) {
         setLoadingIndicator(false)
         this.dataTracks.clear()
-            this.dataTracks.addAll(dataTracks as Collection<Track>)
+            this.dataTracks.addAll(dataTracks as Collection<TrackSong>)
         adapter!!.notifyDataSetChanged()
     }
 

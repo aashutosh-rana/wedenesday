@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bcebhagalpur.wednesdayplaybook.R
-import com.bcebhagalpur.wednesdayplaybook.model.Track
+import com.bcebhagalpur.wednesdayplaybook.model.TrackSong
 import com.bumptech.glide.Glide
 
 class SongDetailActivity : AppCompatActivity() {
@@ -33,7 +33,7 @@ class SongDetailActivity : AppCompatActivity() {
         txtPrice =  findViewById(R.id.price_detail)
         videoView = findViewById(R.id.videoView)
         try {
-            displayTrack(intent.getSerializableExtra("track") as Track)
+            displayTrack(intent.getSerializableExtra("track") as TrackSong)
         } catch (e: Exception) {
             displayMessage("Problem while getting song info, Try again.")
         }
@@ -51,7 +51,7 @@ class SongDetailActivity : AppCompatActivity() {
     fun displayMessage(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
-    fun displayTrack(track: Track) {
+    fun displayTrack(track: TrackSong) {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setTitle(track.getTrackName())

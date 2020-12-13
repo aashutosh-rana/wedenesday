@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -13,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bcebhagalpur.wednesdayplaybook.R
 import com.bcebhagalpur.wednesdayplaybook.activity.SongDetailActivity
-import com.bcebhagalpur.wednesdayplaybook.model.Track
+import com.bcebhagalpur.wednesdayplaybook.model.TrackSong
 import com.bumptech.glide.Glide
 
 
-class SongAdapter (var context: Context, var trackList: List<Track>) : RecyclerView.Adapter<SongAdapter.MyViewHolder>() {
+class SongAdapter (var context: Context, var trackList: List<TrackSong>) : RecyclerView.Adapter<SongAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : ViewHolder(view) {
         var row: LinearLayout
@@ -36,9 +35,9 @@ class SongAdapter (var context: Context, var trackList: List<Track>) : RecyclerV
         }
     }
 
-    fun SongAdapter(context: Context?, trackList: List<Track?>?) {
+    fun SongAdapter(context: Context?, trackList: List<TrackSong?>?) {
         this.context = context!!
-        this.trackList = trackList as List<Track>
+        this.trackList = trackList as List<TrackSong>
     }
 
 

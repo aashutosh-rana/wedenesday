@@ -3,14 +3,14 @@ package com.bcebhagalpur.wednesdayplaybook.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class TrackModel {
+class TrackModelSong {
     @SerializedName("resultCount")
     @Expose
     private var resultCount: Int? = null
 
     @SerializedName("results")
     @Expose
-    private var tracks: List<Track?>? = null
+    private var tracks: List<TrackSong?>? = null
 
     fun getResultCount(): Int? {
         return resultCount
@@ -20,11 +20,11 @@ class TrackModel {
         this.resultCount = resultCount
     }
 
-    fun getTracks(): List<Track?>? {
+    fun getTracks(): List<TrackSong?>? {
         return tracks
     }
 
-    fun setTracks(tracks: List<Track?>?) {
+    fun setTracks(tracks: List<TrackSong?>?) {
         this.tracks = tracks
     }
 }
