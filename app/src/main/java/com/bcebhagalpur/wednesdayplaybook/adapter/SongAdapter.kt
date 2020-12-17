@@ -84,9 +84,6 @@ try {
     e.printStackTrace()
 }
 
-//            }else{
-//                Toast.makeText(context,"allready registerd!!!!!",Toast.LENGTH_SHORT).show()
-//            }
         }
     }
 
