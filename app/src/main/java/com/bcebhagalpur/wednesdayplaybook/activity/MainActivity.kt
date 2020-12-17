@@ -1,17 +1,21 @@
 package com.bcebhagalpur.wednesdayplaybook.activity
 
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.recyclerview.widget.*
 import com.bcebhagalpur.wednesdayplaybook.R
 import com.bcebhagalpur.wednesdayplaybook.adapter.SongAdapter
 import com.bcebhagalpur.wednesdayplaybook.model.TrackSong
+import com.bcebhagalpur.wednesdayplaybook.utils.ConnectionManager
 import com.bcebhagalpur.wednesdayplaybook.view.SongListContract
 import com.bcebhagalpur.wednesdayplaybook.view.SongListPresenter
 
@@ -27,16 +31,18 @@ class MainActivity : AppCompatActivity(), SongListContract.View {
 
     private var adapter: SongAdapter? = null
     var presenter: SongListPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        progressBar=findViewById(R.id.progressBar)
+        progressBar = findViewById(R.id.progressBar)
         context = this@MainActivity
         main = findViewById<View>(R.id.song_list_main) as LinearLayout
         txtNoSongs = findViewById<View>(R.id.txtNoSongs) as TextView
         listTracks = findViewById<View>(R.id.listSongs) as RecyclerView
-        adapter = SongAdapter(context as MainActivity, dataTracks)
-        val mLayoutManager: RecyclerView.LayoutManager =GridLayoutManager(applicationContext,2)
+        if (ConnectionManager().checkConnectivity(this)) {
+            adapter = SongAdapter(context as MainActivity, dataTracks, this)
+        val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(applicationContext, 2)
         listTracks!!.layoutManager = mLayoutManager
         listTracks!!.addItemDecoration(
             DividerItemDecoration(
@@ -46,8 +52,22 @@ class MainActivity : AppCompatActivity(), SongListContract.View {
         )
         listTracks!!.itemAnimator = DefaultItemAnimator()
         listTracks!!.adapter = adapter
-    }
-
+    }else{
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("Error")
+            dialog.setMessage("Internet connection is not found")
+            dialog.setPositiveButton("Show history"){text,listener ->
+                val intent=Intent(this,HistoryActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            dialog.setNegativeButton("Exit"){text,listener ->
+                ActivityCompat.finishAffinity(this)
+            }
+            dialog.create()
+            dialog.show()
+        }
+}
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search, menu)
         val searchView =

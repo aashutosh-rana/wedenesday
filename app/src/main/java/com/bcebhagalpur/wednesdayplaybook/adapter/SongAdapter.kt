@@ -8,15 +8,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.room.Room
 import com.bcebhagalpur.wednesdayplaybook.R
 import com.bcebhagalpur.wednesdayplaybook.activity.SongDetailActivity
 import com.bcebhagalpur.wednesdayplaybook.model.TrackSong
+import com.bcebhagalpur.wednesdayplaybook.model.Word
+import com.bcebhagalpur.wednesdayplaybook.room.WordRoomDatabase
 import com.bumptech.glide.Glide
 
-
-class SongAdapter (var context: Context, var trackList: List<TrackSong>) : RecyclerView.Adapter<SongAdapter.MyViewHolder>() {
+class SongAdapter (var context: Context, var trackList: List<TrackSong> , var viewModelStoreOwner: ViewModelStoreOwner) : RecyclerView.Adapter<SongAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : ViewHolder(view) {
         var row: LinearLayout
@@ -63,13 +68,30 @@ class SongAdapter (var context: Context, var trackList: List<TrackSong>) : Recyc
             )
         )
         holder.row.setOnClickListener {
+            val word = Word(
+                track.getCollectionId()!!.toInt(),
+               track.getArtworkUrl100().toString(),track.getTrackName().toString(),
+                track.getArtistName().toString(),track.getTrackPrice().toString()
+            )
+            val db = Room.databaseBuilder(context, WordRoomDatabase::class.java, "word-table").fallbackToDestructiveMigration().allowMainThreadQueries().build()
+
             val detail = Intent(context, SongDetailActivity::class.java)
             detail.putExtra("track",trackList.get(position))
             context.startActivity(detail)
+try {
+    db.wordDao().insert(word)
+}catch (e:Exception){
+    e.printStackTrace()
+}
+
+//            }else{
+//                Toast.makeText(context,"allready registerd!!!!!",Toast.LENGTH_SHORT).show()
+//            }
         }
     }
 
     override fun getItemCount(): Int {
         return trackList.size
     }
+
 }
