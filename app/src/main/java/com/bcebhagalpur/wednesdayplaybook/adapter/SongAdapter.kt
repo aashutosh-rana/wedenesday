@@ -70,19 +70,20 @@ class SongAdapter (var context: Context, var trackList: List<TrackSong> , var vi
         holder.row.setOnClickListener {
             val word = Word(
                 track.getCollectionId()!!.toInt(),
-               track.getArtworkUrl100().toString(),track.getTrackName().toString(),
-                track.getArtistName().toString(),track.getTrackPrice().toString()
+                track.getArtworkUrl100().toString(), track.getTrackName().toString(),
+                track.getArtistName().toString(), track.getTrackPrice().toString()
             )
-            val db = Room.databaseBuilder(context, WordRoomDatabase::class.java, "word-table").fallbackToDestructiveMigration().allowMainThreadQueries().build()
+            val db = Room.databaseBuilder(context, WordRoomDatabase::class.java, "word-table")
+                .fallbackToDestructiveMigration().allowMainThreadQueries().build()
 
             val detail = Intent(context, SongDetailActivity::class.java)
-            detail.putExtra("track",trackList.get(position))
+            detail.putExtra("track", trackList.get(position))
             context.startActivity(detail)
-try {
-    db.wordDao().insert(word)
-}catch (e:Exception){
-    e.printStackTrace()
-}
+            try {
+                db.wordDao().insert(word)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
         }
     }
